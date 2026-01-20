@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-const User = require("../models/user.cjs")
+const User = require("../schemas/user.cjs")
 
 // get all users
 const getUsers = async (req, res) => {

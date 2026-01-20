@@ -1,33 +1,67 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState } from 'react'
 import './App.css'
+import axios from 'axios'
+import 'bootstrap/dist/css/bootstrap.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [users, setUsers] = useState([])
+
+  useEffect(() => {
+    axios.get('https://localhost:4000/users')
+    .then(users => setUsers(users.data))
+    .catch(error => console.log(error))
+  }, [])
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className='w-100 vh-100 d-flex justify-content-center aling-items-center'>
+        <div className='w-50'>
+          <table className='table'>
+            <thead>
+              <tr>
+                <th>
+                  Vorname
+                </th>
+                <th>
+                  Nachname
+                </th>
+                <th>
+                  Straße
+                </th>
+                <th>
+                  Stadt
+                </th>
+                <th>
+                  Land
+                </th>
+                <th>
+                  Telefon-Nr.
+                </th>
+                <th>
+                  E-Mail
+                </th>
+                <th>
+                  Sales Status
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              { users.map(user => 
+                  <tr>
+                    <td>{user.firstName}</td>
+                    <td>{user.lastName}</td>
+                    <td>{user.street}</td>
+                    <td>{user.city}</td>
+                    <td>{user.country}</td>
+                    <td>{user.phone}</td>
+                    <td>{user.emailAddress}</td>
+                    <td>{user.salesStatus}</td>
+                  </tr>
+                ) }
+            </tbody>
+          </table>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
